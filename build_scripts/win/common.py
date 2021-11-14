@@ -156,7 +156,7 @@ def traverse_and_find_qt_path():
     qt_visual_studio_name = r"\\msvc2017_64\bin\\"
     qt_major_version = 5
     qt_minor_versions = [12, 13, 14, 15, 16]
-    qt_patch_versions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    qt_patch_versions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11]
     # We search the A and B drive letters even though it's
     # unlikely for the install to be there
     windows_drive_letters = string.ascii_uppercase

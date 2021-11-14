@@ -601,7 +601,7 @@ void OverlayController::processMotionBindings()
     m_moveCenterTabController.gravityReverseAction(
         m_actions.gravityReverse() );
     m_moveCenterTabController.heightToggleAction( m_actions.heightToggle() );
-    m_moveCenterTabController.resetOffsets( m_actions.resetOffsets() );
+    // m_moveCenterTabController.resetOffsets( m_actions.resetOffsets() );
     m_moveCenterTabController.snapTurnLeft( m_actions.snapTurnLeft() );
     m_moveCenterTabController.snapTurnRight( m_actions.snapTurnRight() );
     m_moveCenterTabController.smoothTurnLeft( m_actions.smoothTurnLeft() );
@@ -609,6 +609,14 @@ void OverlayController::processMotionBindings()
     m_moveCenterTabController.xAxisLockToggle( m_actions.xAxisLockToggle() );
     m_moveCenterTabController.yAxisLockToggle( m_actions.yAxisLockToggle() );
     m_moveCenterTabController.zAxisLockToggle( m_actions.zAxisLockToggle() );
+
+    /// <summary>
+    /// resetOffsetsの動作をrecenterClickedに変更する
+    /// </summary>
+    if ( m_actions.resetOffsets() )
+    {
+        m_fixFloorTabController.recenterClicked();
+    }
 
     // override actions:
     m_moveCenterTabController.optionalOverrideLeftHandSpaceDrag(
@@ -1258,6 +1266,13 @@ void OverlayController::mainEventLoop()
         m_fixFloorTabController.dashboardLoopTick( devicePoses );
         m_videoTabController.dashboardLoopTick();
         m_chaperoneTabController.dashboardLoopTick();
+    }
+    else
+    {
+        /// <summary>
+        /// Tabが非アクティブでもrecenterSpaceが動作するようにした
+        /// </summary>
+        m_fixFloorTabController.dashboardLoopTick( devicePoses );
     }
 
     if ( m_ulOverlayThumbnailHandle != vr::k_ulOverlayHandleInvalid )

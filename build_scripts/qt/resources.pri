@@ -34,6 +34,7 @@ DISTFILES += \
     src/res/qml/motion_page/height_toggle/* \
     src/res/qml/motion_page/space_drag/* \
     src/res/qml/RootPage.qml \
+    src/res/qml/QuickOriginPage.qml \
     src/res/qml/SettingsPage.qml \
     src/res/qml/StatisticsPage.qml \
     src/res/qml/steamvr_page/SteamVRPage.qml \

@@ -66,6 +66,11 @@ Rectangle {
         visible: false
     }
 
+    property QuickOriginPage quickOriginPage: QuickOriginPage {
+        stackView: mainView
+        visible: false
+    }
+
     property SettingsPage settingsPage: SettingsPage {
         stackView: mainView
         visible: false

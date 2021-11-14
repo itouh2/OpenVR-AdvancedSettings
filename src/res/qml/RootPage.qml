@@ -146,6 +146,18 @@ MyStackViewPage {
                        }
                    }
 
+                   MyPushButton {
+                       id: quickOriginButton
+                       iconPath: "qrc:/main_menu_icons/statistics_tab_icon"
+                       activationSoundEnabled: false
+                       text: "   Quick Origin"
+                       Layout.fillWidth: true
+                       onClicked: {
+                           MyResources.playFocusChangedSound()
+                           mainView.push(quickOriginPage)
+                       }
+                   }
+
                    Item {
                        Layout.fillHeight: true
                        Layout.fillWidth: true

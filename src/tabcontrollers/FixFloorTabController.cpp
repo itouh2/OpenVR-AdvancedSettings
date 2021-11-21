@@ -219,6 +219,11 @@ void FixFloorTabController::dashboardLoopTick(
                 parent->m_moveCenterTabController.zeroOffsets();
                 // this reset fixes a bug where fixed floor wouldn't show in WMR
                 parent->m_moveCenterTabController.reset();
+
+                // Quest2 Touchコントローラーを床に置いたときの向きを取得
+                double controllerRot = std::atan2( m[0][0], m[0][1] ) / M_PI * 180.0;
+                // 空間を回転させる
+                parent->m_moveCenterTabController.setRotation( (controllerRot-90)*100 );
             }
         }
     }

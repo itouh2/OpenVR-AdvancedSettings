@@ -2211,6 +2211,31 @@ void MoveCenterTabController::updateHmdRotationCounter(
     m_lastHmdQuaternion = m_hmdQuaternion;
 }
 
+
+/**
+ * \brief 向いている方向にすすむ
+ * \param devicePoses 
+ * \param angle 
+ */
+void MoveCenterTabController::updateHmdMove(
+    vr::TrackedDevicePose_t* devicePoses,
+    double angle )
+{
+    if ( !m_leftHandDragPressed )
+        return;
+    vr::TrackedDevicePose_t* movePose = devicePoses + 0;
+
+    double diff[3] = { movePose->mDeviceToAbsoluteTracking.m[0][2],
+                             0,
+                             movePose->mDeviceToAbsoluteTracking.m[0][0] };
+
+    rotateCoordinates( diff, -angle );
+
+    m_offsetX += static_cast<float>( diff[0] * 0.01 );
+    m_offsetY += static_cast<float>( diff[1] * 0.01 );
+    m_offsetZ += static_cast<float>( diff[2] * 0.01 );
+}
+
 void MoveCenterTabController::updateHandDrag(
     vr::TrackedDevicePose_t* devicePoses,
     double angle )
@@ -3041,7 +3066,8 @@ void MoveCenterTabController::eventLoopTick(
             if ( m_dragComfortFrameSkipCounter >= static_cast<unsigned>(
                      ( dragComfortFactor() * dragComfortFactor() ) ) )
             {
-                updateHandDrag( devicePoses, angle );
+                // updateHandDrag( devicePoses, angle );
+                updateHmdMove( devicePoses, angle );
                 m_lastDragUpdateTimePoint = std::chrono::steady_clock::now();
                 m_dragComfortFrameSkipCounter = 0;
             }

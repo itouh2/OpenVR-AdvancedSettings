@@ -180,6 +180,7 @@ private:
         = vr::TrackedControllerRole_Invalid;
     vr::ETrackedControllerRole m_lastRotateHand
         = vr::TrackedControllerRole_Invalid;
+    bool m_moveForwardPressed = false;
     bool m_leftHandDragPressed = false;
     bool m_rightHandDragPressed = false;
     bool m_overrideLeftHandDragPressed = false;
@@ -227,7 +228,7 @@ private:
 
     void updateHmdRotationCounter( vr::TrackedDevicePose_t hmdPose,
                                    double angle );
-    void updateHmdMove( vr::TrackedDevicePose_t* devicePoses, double angle );
+    void updateMoveForward( vr::TrackedDevicePose_t* devicePoses, double angle );
     void updateHandDrag( vr::TrackedDevicePose_t* devicePoses, double angle );
     void updateHandTurn( vr::TrackedDevicePose_t* devicePoses, double angle );
     void updateGravity();
@@ -293,6 +294,7 @@ public:
     Q_INVOKABLE QString getOffsetProfileName( unsigned index );
 
     // actions:
+    void moveForward( bool moveForwardActive );
     void leftHandSpaceDrag( bool leftHandDragActive );
     void rightHandSpaceDrag( bool rightHandDragActive );
     void optionalOverrideLeftHandSpaceDrag( bool overrideLeftHandDragActive );

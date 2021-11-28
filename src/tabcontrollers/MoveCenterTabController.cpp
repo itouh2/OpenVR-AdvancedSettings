@@ -1366,6 +1366,12 @@ float MoveCenterTabController::getBoundsBasisMaxY()
     return result;
 }
 
+
+void MoveCenterTabController::moveForward( bool moveForwardActive )
+{
+    m_moveForwardPressed = moveForwardActive;
+}
+
 // START of drag bindings:
 
 void MoveCenterTabController::leftHandSpaceDrag( bool leftHandDragActive )
@@ -2217,11 +2223,11 @@ void MoveCenterTabController::updateHmdRotationCounter(
  * \param devicePoses 
  * \param angle 
  */
-void MoveCenterTabController::updateHmdMove(
+void MoveCenterTabController::updateMoveForward(
     vr::TrackedDevicePose_t* devicePoses,
     double angle )
 {
-    if ( !m_leftHandDragPressed )
+    if ( !m_moveForwardPressed )
         return;
     vr::TrackedDevicePose_t* movePose = devicePoses + 0;
 
@@ -3053,6 +3059,7 @@ void MoveCenterTabController::eventLoopTick(
                      ( turnComfortFactor() * turnComfortFactor() ) ) )
             {
                 updateHandTurn( devicePoses, angle );
+                updateMoveForward( devicePoses, angle );
                 m_turnComfortFrameSkipCounter = 0;
             }
             else
@@ -3066,8 +3073,7 @@ void MoveCenterTabController::eventLoopTick(
             if ( m_dragComfortFrameSkipCounter >= static_cast<unsigned>(
                      ( dragComfortFactor() * dragComfortFactor() ) ) )
             {
-                // updateHandDrag( devicePoses, angle );
-                updateHmdMove( devicePoses, angle );
+                updateHandDrag( devicePoses, angle );
                 m_lastDragUpdateTimePoint = std::chrono::steady_clock::now();
                 m_dragComfortFrameSkipCounter = 0;
             }

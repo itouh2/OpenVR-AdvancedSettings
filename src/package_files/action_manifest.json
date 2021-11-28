@@ -25,7 +25,7 @@
       "binding_url": "default_action_manifests/ovras-team.advancedsettings_default_hmd.json"
    }
 
-  ], 
+  ],
   "actions": [
     {
       "name": "/actions/music/in/NextTrack",
@@ -65,7 +65,7 @@
       "requirement": "optional",
       "type": "boolean"
     },
-    
+
     {
       "name": "/actions/motion/in/LeftHandSpaceTurn",
       "requirement": "optional",
@@ -73,6 +73,11 @@
     },
     {
       "name": "/actions/motion/in/RightHandSpaceTurn",
+      "requirement": "optional",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/motion/in/MoveForward",
       "requirement": "optional",
       "type": "boolean"
     },
@@ -131,7 +136,7 @@
       "requirement": "optional",
       "type": "boolean"
     },
-    
+
     {
 
       "name": "/actions/motion/in/HeightToggle",
@@ -163,7 +168,7 @@
       "requirement": "optional",
       "type": "boolean"
     },
-    
+
     {
       "name": "/actions/misc/in/XAxisLockToggle",
       "requirement": "optional",
@@ -189,7 +194,7 @@
       "requirement": "optional",
       "type": "boolean"
     },
-	  {
+    {
       "name": "/actions/misc/in/ChaperoneToggle",
       "requirement": "optional",
       "type": "boolean"
@@ -214,17 +219,17 @@
       "requirement": "optional",
       "type": "boolean"
     },
-	    {
+    {
       "name": "/actions/misc/in/KeyPressMisc",
       "requirement": "optional",
       "type": "boolean"
     },
-	    {
+    {
       "name": "/actions/system/in/KeyPressSystem",
       "requirement": "optional",
       "type": "boolean"
     }
-	
+
   ],
   "action_sets": [
     {

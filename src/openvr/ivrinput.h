@@ -47,6 +47,7 @@ namespace action_keys
     constexpr auto smoothTurnLeft = "/actions/motion/in/SmoothTurnLeft";
     constexpr auto smoothTurnRight = "/actions/motion/in/SmoothTurnRight";
     constexpr auto autoTurnToggle = "/actions/motion/in/AutoTurnToggle";
+    constexpr auto moveForward = "/actions/motion/in/MoveForward";
 
     constexpr auto xAxisLockToggle = "/actions/misc/in/XAxisLockToggle";
     constexpr auto yAxisLockToggle = "/actions/misc/in/YAxisLockToggle";
@@ -134,6 +135,7 @@ public:
     bool stopSong();
     bool leftHandSpaceTurn();
     bool rightHandSpaceTurn();
+    bool moveForward();
     bool leftHandSpaceDrag();
     bool rightHandSpaceDrag();
     bool optionalOverrideLeftHandSpaceTurn();
@@ -216,6 +218,7 @@ private:
     // Space bindings
     DigitalAction m_leftHandSpaceTurn;
     DigitalAction m_rightHandSpaceTurn;
+    DigitalAction m_moveForward;
     DigitalAction m_leftHandSpaceDrag;
     DigitalAction m_rightHandSpaceDrag;
     DigitalAction m_optionalOverrideLeftHandSpaceTurn;

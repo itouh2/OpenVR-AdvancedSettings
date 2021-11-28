@@ -589,6 +589,8 @@ void OverlayController::processMotionBindings()
     // Don't reorder these. Override actions must always come after normal
     // because active priority is set based on which action is "newest"
     // normal actions:
+    m_moveCenterTabController.moveForward(
+        m_actions.moveForward() );
     m_moveCenterTabController.leftHandSpaceDrag(
         m_actions.leftHandSpaceDrag() );
     m_moveCenterTabController.rightHandSpaceDrag(

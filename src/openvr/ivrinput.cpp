@@ -109,6 +109,7 @@ SteamIVRInput::SteamIVRInput()
       m_stopTrack( action_keys::stopTrack ),
       m_leftHandSpaceTurn( action_keys::leftHandSpaceTurn ),
       m_rightHandSpaceTurn( action_keys::rightHandSpaceTurn ),
+      m_moveForward( action_keys::moveForward ),
       m_leftHandSpaceDrag( action_keys::leftHandSpaceDrag ),
       m_rightHandSpaceDrag( action_keys::rightHandSpaceDrag ),
       m_optionalOverrideLeftHandSpaceTurn(
@@ -210,6 +211,11 @@ bool SteamIVRInput::leftHandSpaceTurn()
 bool SteamIVRInput::rightHandSpaceTurn()
 {
     return isDigitalActionActivatedConstant( m_rightHandSpaceTurn );
+}
+
+bool SteamIVRInput::moveForward()
+{
+    return isDigitalActionActivatedConstant( m_moveForward );
 }
 
 bool SteamIVRInput::leftHandSpaceDrag()

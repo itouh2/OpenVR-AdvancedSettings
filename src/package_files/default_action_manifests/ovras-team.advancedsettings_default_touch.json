@@ -64,6 +64,15 @@
           },
           "mode": "button",
           "path": "/user/hand/left/input/joystick"
+        },
+        {
+          "inputs": {
+            "click": {
+              "output": "/actions/motion/in/moveforward"
+            }
+          },
+          "mode": "button",
+          "path": "/user/hand/left/input/trigger"
         }
       ]
     },
@@ -84,7 +93,7 @@
   "category": "steamvr_input",
   "controller_type": "oculus_touch",
   "description": "",
-  "name": "OVR Advanced Setting/Oculus Touch/¶è‘€ìİ’è",
+  "name": "OVR Advanced Setting/Oculus Touch/å·¦æ‰‹æ“ä½œè¨­å®š",
   "options": {},
   "simulated_actions": []
 }

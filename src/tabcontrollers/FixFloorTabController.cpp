@@ -1,6 +1,34 @@
 #include "FixFloorTabController.h"
 #include <QQuickWindow>
 #include "../overlaycontroller.h"
+#include <fstream>
+
+
+using namespace std;
+
+vector<string> split( const string& s, char delim )
+{
+    vector<string> elems;
+    string item;
+    for ( char ch : s )
+    {
+        if ( ch == delim )
+        {
+            if ( !item.empty() )
+                elems.push_back( item );
+            item.clear();
+        }
+        else
+        {
+            item += ch;
+        }
+    }
+    if ( !item.empty() )
+        elems.push_back( item );
+    return elems;
+}
+
+void rotateCoordinates( double coordinates[3], double angle );
 
 // application namespace
 namespace advsettings
@@ -200,30 +228,59 @@ void FixFloorTabController::dashboardLoopTick(
                     << "Fix Floor and adjust space center: Floor Offset = ["
                     << floorOffsetX << ", " << floorOffsetY << ", "
                     << floorOffsetZ << "]";
+
+
+                // 原点位置オフセットを読み込む
+                double offsetF[3];
+                std::ifstream ifs( "c:\\offset.txt" );
+                std::string str;
+
+                getline( ifs, str );
+                const auto floats = split( str, ',' );
+                offsetF[0] = atof( floats[0].c_str() );
+                offsetF[1] = atof( floats[1].c_str() );
+                offsetF[2] = atof( floats[2].c_str() );
+
+                getline( ifs, str );
+                const auto ints = split( str, ',' );
+                auto i0 = atoi( ints[0].c_str() );
+                auto i1 = atoi( ints[1].c_str() );
+                auto i2 = atoi( ints[2].c_str() );
+                auto i3 = atoi( ints[3].c_str() );
+                // Quest2 Touchコントローラーを床に置いたときの向きを取得
+                double controllerRotDeg
+                    = std::atan2( m[i0][i1], m[i2][i3] ) / M_PI * 180.0;
+
+                double fr = controllerRotDeg + atof( floats[3].c_str() );
+
+
+                // 後で空間を回転する反対にオフセット位置を回転させる
+                rotateCoordinates( offsetF, -fr/180.0*M_PI );
+
                 float offset[3] = { 0, 0, 0 };
-                offset[1] = floorOffsetY;
+                offset[1] = floorOffsetY + offsetF[1];
                 if ( state == 2 )
                 {
-                    offset[0] = floorOffsetX;
-                    offset[2] = floorOffsetZ;
+                    offset[0] = floorOffsetX + offsetF[0];
+                    offset[2] = floorOffsetZ + offsetF[2];
                 }
+
                 parent->AddOffsetToUniverseCenter(
                     vr::TrackingUniverseStanding, offset, true );
-                statusMessage
-                    = ( state == 2 ) ? "Recentering ... Ok" : "Fixing ... OK";
+                statusMessage = ( state == 2 ) ? "Recentering ... Ok"
+                                               : "Fixing ... OK";
                 statusMessageTimeout = 1.0;
                 emit statusMessageSignal();
                 emit measureEndSignal();
                 setCanUndo( true );
                 state = 0;
                 parent->m_moveCenterTabController.zeroOffsets();
-                // this reset fixes a bug where fixed floor wouldn't show in WMR
+                // this reset fixes a bug where fixed floor wouldn't show in
+                // WMR
                 parent->m_moveCenterTabController.reset();
 
-                // Quest2 Touchコントローラーを床に置いたときの向きを取得
-                double controllerRot = std::atan2( m[0][0], m[0][1] ) / M_PI * 180.0;
-                // 空間を回転させる
-                parent->m_moveCenterTabController.setRotation( (controllerRot-90)*100 );
+                // 空間を回転させる HMDを中心にまわすモードだとうまくいかない
+                parent->m_moveCenterTabController.setRotation( fr  * 100 );
             }
         }
     }
